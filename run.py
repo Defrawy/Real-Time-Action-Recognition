@@ -44,13 +44,13 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.__layout_fun_button = QtWidgets.QVBoxLayout()
         self.__layout_data_show = QtWidgets.QVBoxLayout()
 
-        self.button_open_camera = QtWidgets.QPushButton(u'相机 OFF')
+        self.button_open_camera = QtWidgets.QPushButton(u'camera OFF')
 
-        self.button_mode_1 = QtWidgets.QPushButton(u'姿态估计 OFF')
-        self.button_mode_2 = QtWidgets.QPushButton(u'多人跟踪 OFF')
-        self.button_mode_3 = QtWidgets.QPushButton(u'行为识别 OFF')
+        self.button_mode_1 = QtWidgets.QPushButton(u'Attitude Estimation OFF')
+        self.button_mode_2 = QtWidgets.QPushButton(u'Multiplayer tracking OFF')
+        self.button_mode_3 = QtWidgets.QPushButton(u'Behavior recognition OFF')
 
-        self.button_close = QtWidgets.QPushButton(u'退出')
+        self.button_close = QtWidgets.QPushButton(u'drop out')
 
         self.button_open_camera.setMinimumHeight(50)
         self.button_mode_1.setMinimumHeight(50)
@@ -84,7 +84,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
         self.setLayout(self.__layout_main)
         self.label_move.raise_()
-        self.setWindowTitle(u'实时多人姿态估计与行为识别系统')
+        self.setWindowTitle(u'Real-time multi-person attitude estimation and behavior recognition system')
 
     def slot_init(self):
         self.button_open_camera.clicked.connect(self.button_event)
@@ -100,56 +100,56 @@ class Ui_MainWindow(QtWidgets.QWidget):
         if sender == self.button_mode_1 and self.timer_camera.isActive():
             if self.__flag_mode != 1:
                 self.__flag_mode = 1
-                self.button_mode_1.setText(u'姿态估计 ON')
-                self.button_mode_2.setText(u'多人跟踪 OFF')
-                self.button_mode_3.setText(u'行为识别 OFF')
+                self.button_mode_1.setText(u'Attitude Estimation ON')
+                self.button_mode_2.setText(u'Multiplayer Tracking OFF')
+                self.button_mode_3.setText(u'Behavior Recognition OFF')
             else:
                 self.__flag_mode = 0
-                self.button_mode_1.setText(u'姿态估计 OFF')
-                self.infoBox.setText(u'相机已打开')
+                self.button_mode_1.setText(u'Attitude Estimation OFF')
+                self.infoBox.setText(u'Camera is on')
         elif sender == self.button_mode_2 and self.timer_camera.isActive():
             if self.__flag_mode != 2:
                 self.__flag_mode = 2
-                self.button_mode_1.setText(u'姿态估计 OFF')
-                self.button_mode_2.setText(u'多人跟踪 ON')
-                self.button_mode_3.setText(u'行为识别 OFF')
+                self.button_mode_1.setText(u'Attitude Estimation OFF')
+                self.button_mode_2.setText(u'Multiplayer tracking ON')
+                self.button_mode_3.setText(u'Behavior recognition OFF')
             else:
                 self.__flag_mode = 0
-                self.button_mode_2.setText(u'多人跟踪 OFF')
-                self.infoBox.setText(u'相机已打开')
+                self.button_mode_2.setText(u'Multiplayer tracking OFF')
+                self.infoBox.setText(u'camera已打开')
         elif sender == self.button_mode_3 and self.timer_camera.isActive():
             if self.__flag_mode != 3:
                 self.__flag_mode = 3
-                self.button_mode_1.setText(u'姿态估计 OFF')
-                self.button_mode_2.setText(u'多人跟踪 OFF')
-                self.button_mode_3.setText(u'行为识别 ON')
+                self.button_mode_1.setText(u'Attitude Estimation OFF')
+                self.button_mode_2.setText(u'Multiplayer tracking OFF')
+                self.button_mode_3.setText(u'Behavior recognition ON')
             else:
                 self.__flag_mode = 0
-                self.button_mode_3.setText(u'行为识别 OFF')
-                self.infoBox.setText(u'相机已打开')
+                self.button_mode_3.setText(u'Behavior recognition OFF')
+                self.infoBox.setText(u'camera已打开')
         else:
             self.__flag_mode = 0
-            self.button_mode_1.setText(u'姿态估计 OFF')
-            self.button_mode_2.setText(u'多人跟踪 OFF')
-            self.button_mode_3.setText(u'行为识别 OFF')
+            self.button_mode_1.setText(u'Attitude Estimation OFF')
+            self.button_mode_2.setText(u'Multiplayer tracking OFF')
+            self.button_mode_3.setText(u'Behavior recognition OFF')
             if self.timer_camera.isActive() == False:
                 flag = self.cap.open(self.CAM_NUM)
                 self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, settings.winWidth)
                 self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, settings.winHeight)
                 if flag == False:
-                    msg = QtWidgets.QMessageBox.warning(self, u"Warning", u"请检测相机与电脑是否连接正确",
+                    msg = QtWidgets.QMessageBox.warning(self, u"Warning", u"Please check if the camera and computer are connected correctly.",
                                                         buttons=QtWidgets.QMessageBox.Ok,
                                                         defaultButton=QtWidgets.QMessageBox.Ok)
                 else:
                     self.timer_camera.start(1)
-                    self.button_open_camera.setText(u'相机 ON')
-                    self.infoBox.setText(u'相机已打开')
+                    self.button_open_camera.setText(u'camera ON')
+                    self.infoBox.setText(u'camera已打开')
             else:
                 self.timer_camera.stop()
                 self.cap.release()
                 self.label_show_camera.clear()
-                self.button_open_camera.setText(u'相机 OFF')
-                self.infoBox.setText(u'相机已关闭')
+                self.button_open_camera.setText(u'camera OFF')
+                self.infoBox.setText(u'Camera is off')
 
     def show_camera(self):
         start = time.time()
@@ -158,12 +158,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
         show = cv2.cvtColor(show, cv2.COLOR_BGR2RGB)
         if ret:
             if self.__flag_mode == 1:
-                self.infoBox.setText(u'当前为人体姿态估计模式')
+                self.infoBox.setText(u'当前为人体Attitude Estimation模式')
                 humans = poseEstimator.inference(show)
                 show = TfPoseEstimator.draw_humans(show, humans, imgcopy=False)
 
             elif self.__flag_mode == 2:
-                self.infoBox.setText(u'当前为多人跟踪模式')
+                self.infoBox.setText(u'当前为Multiplayer tracking模式')
                 humans = poseEstimator.inference(show)
                 show, joints, bboxes, xcenter, sk = TfPoseEstimator.get_skeleton(show, humans, imgcopy=False)
                 height = show.shape[0]
@@ -188,8 +188,10 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                        int(settings.c[label % 32, 1]),
                                        int(settings.c[label % 32, 2])), 4)
 
+
+            # This is the part to get the kt points
             elif self.__flag_mode == 3:
-                self.infoBox.setText(u'当前为人体行为识别模式')
+                self.infoBox.setText(u'当前为人体Behavior recognition模式')
                 humans = poseEstimator.inference(show)
                 ori = np.copy(show)
                 show, joints, bboxes, xcenter, sk= TfPoseEstimator.get_skeleton(show, humans, imgcopy=False)
@@ -264,12 +266,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
         ok = QtWidgets.QPushButton()
         cancel = QtWidgets.QPushButton()
 
-        msg = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, u"关闭", u"是否关闭！")
+        msg = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, u"shut down", u"Whether it is closed!")
 
         msg.addButton(ok, QtWidgets.QMessageBox.ActionRole)
         msg.addButton(cancel, QtWidgets.QMessageBox.RejectRole)
-        ok.setText(u'确定')
-        cancel.setText(u'取消')
+        ok.setText(u'determine')
+        cancel.setText(u'cancel')
         if msg.exec_() == QtWidgets.QMessageBox.RejectRole:
             event.ignore()
         else:
