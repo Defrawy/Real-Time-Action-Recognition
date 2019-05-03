@@ -208,7 +208,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
             
         if ret:
             show_s = cv2.resize(frame, (settings.winWidth, settings.winHeight))
-            show = cv2.cvtColor(show, cv2.COLOR_BGR2RGB)
+            show = cv2.cvtColor(show_s, cv2.COLOR_BGR2RGB)
             if self.__flag_mode == 1:
                 self.infoBox.setText(u'当前为人体Attitude Estimation模式')
                 humans = poseEstimator.inference(show)
