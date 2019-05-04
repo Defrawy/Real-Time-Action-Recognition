@@ -55,7 +55,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.button_mode_1 = QtWidgets.QPushButton(u'Attitude Estimation OFF')
         self.button_mode_2 = QtWidgets.QPushButton(u'Multiplayer tracking OFF')
         self.button_mode_3 = QtWidgets.QPushButton(u'Behavior recognition OFF')
-        self.button_video = QtWidgets.QPushButton("Load Viedo")
+        self.button_video = QtWidgets.QPushButton("Load Video")
 
         self.button_close = QtWidgets.QPushButton(u'Exit')
 
@@ -166,6 +166,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 self.infoBox.setText(u'当前为Multiplayer tracking模式')
                 humans = poseEstimator.inference(show)
                 show, joints, bboxes, xcenter, sk = TfPoseEstimator.get_skeleton(show, humans, imgcopy=False)
+                show = TfPoseEstimator.draw_humans(show, humans, imgcopy=False)
                 height = show.shape[0]
                 width = show.shape[1]
                 if bboxes:
@@ -195,6 +196,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                 humans = poseEstimator.inference(show)
                 ori = np.copy(show)
                 show, joints, bboxes, xcenter, sk= TfPoseEstimator.get_skeleton(show, humans, imgcopy=False)
+                show = TfPoseEstimator.draw_humans(show, humans, imgcopy=False)
                 height = show.shape[0]
                 width = show.shape[1]
                 if bboxes:
@@ -275,12 +277,12 @@ class Ui_MainWindow(QtWidgets.QWidget):
         ok = QtWidgets.QPushButton()
         cancel = QtWidgets.QPushButton()
 
-        msg = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, u"shut down", u"Whether it is closed!")
+        msg = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, u"shut down", u"Are you sure you want to quit?")
 
         msg.addButton(ok, QtWidgets.QMessageBox.ActionRole)
         msg.addButton(cancel, QtWidgets.QMessageBox.RejectRole)
-        ok.setText(u'determine')
-        cancel.setText(u'cancel')
+        ok.setText(u'Yes')
+        cancel.setText(u'Cancel')
         if msg.exec_() == QtWidgets.QMessageBox.RejectRole:
             event.ignore()
         else:
