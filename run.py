@@ -335,6 +335,15 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.timer_camera.stop()
         # self.timer_camera.start(1)
 
+        ret, frame = self.cap.read()
+        if ret:
+            show_s = cv2.resize(frame, (settings.winWidth, settings.winHeight))
+            show = cv2.cvtColor(show_s, cv2.COLOR_BGR2RGB)
+
+            showImage = QtGui.QImage(show.data, show.shape[1], show.shape[0], QtGui.QImage.Format_RGB888)
+            self.label_show_camera.setPixmap(QtGui.QPixmap.fromImage(showImage))
+            
+
     def switch_to_camera(self):
         indicators['camera'] = not indicators['camera'] 
         [self.stop_camera, self.start_camera][int(indicators['camera'])]()
