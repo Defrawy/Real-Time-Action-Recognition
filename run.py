@@ -43,7 +43,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.current = []
         self.previous = []
         self.fourcc = cv2.VideoWriter_fourcc(*'mp4v') # Be sure to use lower case
-        self.out = cv2.VideoWriter('x.mp4', self.fourcc, 1, (settings.winWidth, settings.winHeight))
+        self.out = cv2.VideoWriter('x.mp4', self.fourcc, 24, (settings.winWidth, settings.winHeight))
 
     def set_ui(self):
 
@@ -260,7 +260,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                 if location[1] <= 10:
                                     location = (location[0], 31)
 
-                                cv2.putText(show, settings.move_status[pred], (location[0] - 45, location[1] - 30),
+                                cv2.putText(show, settings.move_status[pred], (location[0] - 30, location[1] - 30),
                                             cv2.FONT_HERSHEY_SIMPLEX, 0.8,
                                             (0, 255, 0), 2)
 
@@ -269,7 +269,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                        int(settings.c[label % 32, 1]),
                                        int(settings.c[label % 32, 2])), 4)
 
-            
+            show_s = cv2.cvtColor(show, cv2.COLOR_RGB2BGR)
             self.out.write(show_s) # Write out frame to video
 
             end = time.time()
