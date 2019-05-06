@@ -260,7 +260,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
                                 if location[1] <= 10:
                                     location = (location[0], 31)
 
-                                cv2.putText(show, settings.move_status[pred], (location[0] - 30, location[1] - 30),
+                                # cv2.putText(show, settings.move_status[pred], (location[0] - 30, location[1] - 30),
+                                #             cv2.FONT_HERSHEY_SIMPLEX, 0.8,
+                                #             (0, 255, 0), 2)
+
+                                cv2.putText(show, settings.move_status[pred], (xmin - 15, ymin - 15),
                                             cv2.FONT_HERSHEY_SIMPLEX, 0.8,
                                             (0, 255, 0), 2)
 
